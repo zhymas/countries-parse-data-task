@@ -16,7 +16,9 @@ class CountriesDataParser(CountriesParserDataInterface):
     async def parse_country_data(self) -> List[Dict[str, Any]]:
         try:
             logger.info(f"Parsing countries data from {self.countries_url}")
-            return await self._get_countries_data()
+            countries_data = await self._get_countries_data()
+            logger.info(f"Parsed {countries_data} countries")
+            return countries_data
         except ParserException as e:
             raise e
         
@@ -55,8 +57,8 @@ class CountriesDataParser(CountriesParserDataInterface):
         try:
             return {
                 "country": cells[0].get_text(strip=True),
-                "population": cells[1].get_text(strip=True) if cells[1].get_text(strip=True) != "N/A" else 0,
-                "location": cells[5].get_text(strip=True)
+                "population": int(cells[1].get_text(strip=True).replace(',', '')) if cells[1].get_text(strip=True) != "N/A" else 0,
+                "region": cells[5].get_text(strip=True)
             }
         except (IndexError, AttributeError):
             return None

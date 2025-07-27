@@ -2,10 +2,24 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY ../../requirements/base.txt .
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip install -r base.txt
+COPY ../../requirements/base.txt requirements.txt
 
-COPY . .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+RUN mkdir -p src/{get_data,logs,config,database}
+
+COPY src/get_data/ src/get_data/
+COPY src/logs/ src/logs/
+COPY src/config/ src/config/
+COPY src/database/ src/database/
+
+RUN useradd --create-home --shell /bin/bash app && \
+    chown -R app:app /app
+USER app
 
 CMD ["python", "src/get_data/main.py"]

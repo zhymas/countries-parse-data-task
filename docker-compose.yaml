@@ -1,7 +1,14 @@
 version: '3.8'
 
 services:
-  
+
+  get_data:
+    build:
+      context: .
+      dockerfile: src/get_data/Dockerfile
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:latest
     ports:

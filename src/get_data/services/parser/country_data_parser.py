@@ -53,7 +53,7 @@ class CountriesDataParser(CountriesParserDataInterface):
         try:
             return {
                 "country": cells[0].get_text(strip=True),
-                "population_2023": cells[1].get_text(strip=True),
+                "population": cells[1].get_text(strip=True) if cells[1].get_text(strip=True) != "N/A" else 0,
                 "location": cells[5].get_text(strip=True)
             }
         except (IndexError, AttributeError):

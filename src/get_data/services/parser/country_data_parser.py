@@ -3,6 +3,7 @@ from typing import List, Dict, Any
 
 from interfaces.parsers.parser_country_data_interface import CountriesParserDataInterface
 from interfaces.request_service.request_service import RequestServiceInterface
+from services.parser.parsers_exceptions import PasrserTableNotFoundError, ParserException
 
 class CountriesDataParser(CountriesParserDataInterface):
     def __init__(self, 
@@ -12,7 +13,10 @@ class CountriesDataParser(CountriesParserDataInterface):
         self.request_service = request_service
 
     async def parse_country_data(self) -> List[Dict[str, Any]]:
-        return await self._get_countries_data()
+        try:
+            return await self._get_countries_data()
+        except ParserException as e:
+            raise e
         
     async def _get_countries_data(self) -> List[Dict[str, Any]]:
         response = await self.request_service.get_request(self.countries_url)
@@ -26,7 +30,7 @@ class CountriesDataParser(CountriesParserDataInterface):
     def _find_country_table(self, soup: BeautifulSoup):
         country_table = soup.find("table", {"class": "wikitable"})
         if not country_table:
-            raise ValueError("Failed to find the table with country data on the page")
+            raise PasrserTableNotFoundError("Failed to find the table with country data on the page")
         return country_table
     
     def _extract_countries_data(self, table) -> List[Dict[str, Any]]:

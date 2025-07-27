@@ -27,13 +27,13 @@ class CountriesDataParser(CountriesParserDataInterface):
         country_table = self._find_country_table(soup)
         return self._extract_countries_data(country_table)
     
-    def _find_country_table(self, soup: BeautifulSoup):
+    def _find_country_table(self, soup: BeautifulSoup) -> BeautifulSoup:
         country_table = soup.find("table", {"class": "wikitable"})
         if not country_table:
             raise PasrserTableNotFoundError("Failed to find the table with country data on the page")
         return country_table
     
-    def _extract_countries_data(self, table) -> List[Dict[str, Any]]:
+    def _extract_countries_data(self, table: BeautifulSoup) -> List[Dict[str, Any]]:
         tbody = table.find("tbody") or table
         rows = tbody.find_all("tr")
         countries_data = []
@@ -45,7 +45,7 @@ class CountriesDataParser(CountriesParserDataInterface):
         
         return countries_data
     
-    def _parse_country_row(self, row) -> Dict[str, Any]:
+    def _parse_country_row(self, row: BeautifulSoup) -> Dict[str, Any]:
         cells = row.find_all(["td", "th"])
         if len(cells) < 6:
             return None

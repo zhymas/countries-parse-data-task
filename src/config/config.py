@@ -19,7 +19,7 @@ class DatabaseConfig(BaseSettings):
         return f"postgresql+asyncpg://{self.db_username}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
     
 class CountriesConfig(BaseSettings):
-    countries_url: str = Field(..., env="COUNTRIES_URL")
+    wikipedia_url: str = Field(..., env="WIKIPEDIA_URL")
 
 class Config(BaseSettings):
     database: DatabaseConfig = DatabaseConfig()

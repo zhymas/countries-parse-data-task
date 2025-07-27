@@ -15,8 +15,12 @@ class DatabaseConfig(BaseSettings):
     db_name: str = Field(default="postgres", env="DB_NAME")
 
     @property
-    def url(self) -> str:
+    def asyncpg_url(self) -> str:
         return f"postgresql+asyncpg://{self.db_username}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
+    
+    @property
+    def syncpg_url(self) -> str:
+        return f"postgresql://{self.db_username}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
     
 class CountriesConfig(BaseSettings):
     wikipedia_url: str = Field(default="https://en.wikipedia.org/w/index.php?title=List_of_countries_by_population_(United_Nations)&oldid=1215058959", env="WIKIPEDIA_URL")

@@ -4,6 +4,7 @@ from typing import List, Dict, Any
 from interfaces.parsers.parser_country_data_interface import CountriesParserDataInterface
 from interfaces.request_service.request_service import RequestServiceInterface
 from services.parser.parsers_exceptions import PasrserTableNotFoundError, ParserException
+from logs import logger
 
 class CountriesDataParser(CountriesParserDataInterface):
     def __init__(self, 
@@ -14,6 +15,7 @@ class CountriesDataParser(CountriesParserDataInterface):
 
     async def parse_country_data(self) -> List[Dict[str, Any]]:
         try:
+            logger.info(f"Parsing countries data from {self.countries_url}")
             return await self._get_countries_data()
         except ParserException as e:
             raise e

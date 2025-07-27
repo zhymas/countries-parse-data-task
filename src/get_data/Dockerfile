@@ -11,12 +11,13 @@ COPY ../../requirements/base.txt requirements.txt
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-RUN mkdir -p src/{get_data,logs,config,database}
+RUN mkdir -p src/{get_data,logs,config,database, models}
 
 COPY src/get_data/ src/get_data/
 COPY src/logs/ src/logs/
 COPY src/config/ src/config/
 COPY src/database/ src/database/
+COPY src/models/ src/models/
 
 RUN useradd --create-home --shell /bin/bash app && \
     chown -R app:app /app

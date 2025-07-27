@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS countries (
     id SERIAL PRIMARY KEY, 
-    country VARCHAR(255) NOT NULL,
-    population INT NOT NULL,
+    country VARCHAR(255) NOT NULL UNIQUE,
+    population BIGINT NOT NULL,
     region VARCHAR(255) NOT NULL
 );

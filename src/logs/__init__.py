@@ -1,5 +1,3 @@
-import os
-import datetime
 import logging
 
 import colorlog
@@ -22,13 +20,4 @@ formatter = colorlog.ColoredFormatter(
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
 
-current_date = datetime.datetime.now().strftime("%d-%m-%Y")
-log_directory = os.path.join(os.getcwd(), "logs")
-log_file = os.path.join(log_directory, f"logs_{current_date}.log")
-
-file_handler = logging.FileHandler(log_file)
-file_handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(message)s"))
-
-# Add the StreamHandler to the logger
 logger.addHandler(stream_handler)
-logger.addHandler(file_handler)

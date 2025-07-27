@@ -10,7 +10,7 @@ load_dotenv(ROOT_DIR / ".env")
 class DatabaseConfig(BaseSettings):
     db_username: str = Field(default="postgres", env="DB_USERNAME")
     db_password: str = Field(default="postgres", env="DB_PASSWORD")
-    db_host: str = Field(default="localhost", env="DB_HOST")
+    db_host: str = Field(default="postgres", env="DB_HOST")
     db_port: int = Field(default=5432, env="DB_PORT")
     db_name: str = Field(default="postgres", env="DB_NAME")
 

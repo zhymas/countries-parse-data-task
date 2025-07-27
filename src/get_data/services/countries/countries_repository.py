@@ -22,11 +22,10 @@ class CountriesRepository:
                 logger.info("All countries already exist in database")
                 return existing_countries
             
-            async with session.begin():
-                session.add_all(new_countries)
-                await session.commit()
-                logger.info(f"Successfully inserted {len(new_countries)} new countries")
-                return new_countries
+            session.add_all(new_countries)
+            await session.commit()
+            logger.info(f"Successfully inserted {len(new_countries)} new countries")
+            return new_countries
                 
         except Exception as e:
             logger.error(f"Failed to insert countries: {e}")

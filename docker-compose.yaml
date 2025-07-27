@@ -9,6 +9,13 @@ services:
     depends_on:
       - postgres
 
+  print_data:
+    build:
+      context: .
+      dockerfile: src/print_data/Dockerfile
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:latest
     ports:

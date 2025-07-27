@@ -9,12 +9,18 @@ services:
     depends_on:
       - postgres
 
+    command: >
+      sh -c "python src/database/health_check/check_db_health.py && python src/get_data/main.py"
+
   print_data:
     build:
       context: .
       dockerfile: src/print_data/Dockerfile
     depends_on:
       - postgres
+
+    command: >
+      sh -c "python src/database/health_check/check_db_health.py && python src/print_data/main.py"
 
   postgres:
     image: postgres:latest
